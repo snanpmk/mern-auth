@@ -6,7 +6,7 @@ export default function Header() {
     <div className="bg-slate-200">
       <div className="flex justify-between max-w-6xl mx-auto items-center p-3">
         <h1 className="font-bold">Auth App</h1>
-        <ul className="flex gap-4">
+        <ul className="flex gap-6">
           <Link to="/">
             <li>Home</li>
           </Link>
