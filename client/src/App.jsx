@@ -8,9 +8,12 @@ import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
+import AdminLogin from "./pages/admin/AdminLogin";
+import Dashboard from "./pages/admin/Dashboard";
+import ForNFor from "./pages/ForNFor";
 
 export default function App() {
-  const currentUser = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser, "////");
 
   return (
@@ -22,14 +25,26 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route
-          exact path="/profile"
+          exact
+          path="/profile"
           element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           }
         />
-        
+        {currentUser && currentUser.username === "ChandlerBing" ? (
+          <>
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </>
+        ) : (
+          <>
+            <Route path="/admin" element={<ForNFor />} />
+            <Route path="/dashboard" element={<ForNFor />} />
+          </>
+          
+        )}
       </Routes>
     </BrowserRouter>
   );
