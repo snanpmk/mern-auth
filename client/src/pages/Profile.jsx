@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { app } from "../firebase";
 import {
@@ -9,15 +9,26 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { set } from "mongoose";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUSerFailure,
+} from "../redux/users/userSlice";
+
 export default function Profile() {
+
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
-  const [error, setImageError] = useState(0);
+  const [imageError, setImageError] = useState(0);
   const [formData, setFormData] = useState({});
-  console.log("uploading  " + imagePercent + " %");
-  console.log(formData);
-  const { currentUser } = useSelector((state) => state.user);
+  const [updateSuccess,setUpdateSuccess] = useState()
+  const dispatch = useDispatch();
+
+
+
+  const { currentUser,loading,error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
+  console.log(currentUser);
 
   useEffect(() => {
     if (image) {
@@ -48,10 +59,38 @@ export default function Profile() {
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart())
+      const res = await fetch(`api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success == false) {
+        dispatch(updateUSerFailure(data))
+        return
+      }
+      dispatch(updateUserSuccess(data))
+      setUpdateSuccess(true)
+    } catch (error) {
+        dispatch(updateUSerFailure(error))
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-      <form className="flex flex-col gap-4" action="">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4" action="">
         <input
           type="file"
           ref={fileRef}
@@ -66,7 +105,7 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
         />
         <p className="text-sm self-center">
-          {error ? (
+          {imageError ? (
             <span className="text-red-700">
               error in uploading image (file size must be less than 2 mb)
             </span>
@@ -87,6 +126,7 @@ export default function Profile() {
           id="username"
           className="bg-slate-100 p-3 rounded-lg"
           autoComplete="Username"
+          onChange={handleChange}
         />
         <input
           type="email"
@@ -95,6 +135,7 @@ export default function Profile() {
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
           autoComplete="Email"
+          onChange={handleChange}
         />
         <input
           type="password"
@@ -103,9 +144,10 @@ export default function Profile() {
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
           autoComplete="password"
+          onChange={handleChange}
         />
         <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          Update
+          {loading ? 'loading..':'Update'}
         </button>
       </form>
       <div className="flex justify-between mt-5 ">
@@ -116,6 +158,8 @@ export default function Profile() {
           Sign out
         </span>
       </div>
+      <p className="text-red-700">{error && 'something went wrong'}</p>
+      <p className="text-green-700 mt-3 self-center">{updateSuccess && 'Profile updated successfully 😊'}</p>
     </div>
   );
 }
