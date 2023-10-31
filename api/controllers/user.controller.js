@@ -7,8 +7,9 @@ export const test = (req, res) => {
     })
 }
 
-export const   updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
     if (req.user._id !== req.param.id) {
+        console.log(req.user._id+"😊😊😊");
         return errorHandler(401, 'You can update only your account !')
     }
     try {
@@ -23,13 +24,26 @@ export const   updateUser = async (req, res, next) => {
                     email: req.body.email,
                     profilePicture: req.body.profilePicture,
                     password: req.body.password,
-                },  
+                },
             },
             { new: true }
         )
         console.log(updatedUser);
-        const {password,...rest} = updatedUser._doc
+        const { password, ...rest } = updatedUser._doc
         res.status(200).json(rest)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const deleteUser = async (req, res, next) => {
+    if (req.user._id !== req.param.id) {
+        return errorHandler(401, 'You can delte only your account !')
+    }
+    try {
+        await User.findByIdAndDelete(req.params.id)
+        console.log(req.params.id+'🐐🐐');
+        res.status(200).json('You account has been deleted')
     } catch (error) {
         next(error)
     }
