@@ -18,11 +18,16 @@ export default function Home() {
         alt=""
       />
       <p className="mb-4 text-slate-700">
-    Welcome to Authentica, our MERN (MongoDB, Express, React, Node.js) application with authentication! Enjoy a seamless user experience with <span className="font-bold">Redux Toolkit</span> for state management and secure <span className="font-bold">JWT</span> authentication.
-
-    You can <span className="font-bold">sign up</span>, <span className="font-bold">log in</span>, and use <span className="font-bold">Google authentication</span> for easy access. Personalize your experience by <span className="font-bold">uploading profile pictures</span>.
-</p>
-
+        Welcome to Authentica, our MERN (MongoDB, Express, React, Node.js)
+        application with authentication! Enjoy a seamless user experience with{" "}
+        <span className="font-bold">Redux Toolkit</span> for state management
+        and secure <span className="font-bold">JWT</span> authentication. You
+        can <span className="font-bold">sign up</span>,{" "}
+        <span className="font-bold">log in</span>, and use{" "}
+        <span className="font-bold">Google authentication</span> for easy
+        access. Personalize your experience by{" "}
+        <span className="font-bold">uploading profile pictures</span>.
+      </p>
 
       <p className="mb-4 text-slate-700">
         This application is intended as a starting point for building full-stack
