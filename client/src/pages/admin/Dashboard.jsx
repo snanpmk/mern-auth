@@ -126,7 +126,7 @@ function Dashboard() {
                     </button>
                     <button
                       onClick={() => handleDelete(item)}
-                      className="font-medium bg-red-300 py-3 px-3 rounded-lg text-black hover.bg-opacity-80"
+                      className="font-medium bg-red-300 py-3 px-3 rounded-lg text-black hover:bg-opacity-80"
                     >
                       <RiDeleteBin2Fill />
                     </button>
