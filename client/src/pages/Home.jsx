@@ -1,6 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+  const { currentUser } = useSelector((state) => {
+    return state.user;
+  });
+
   return (
     <div className="px-4 py-12 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold  mb-4 text-slate-800">Home</h1>
@@ -22,9 +28,17 @@ export default function Home() {
 
       <p className="mb-4 text-slate-700">
         This application is intended as a starting point for building full-stack
-        web applications with authentication using the MERN stack. Feel free to
-        use it as a template for your own projects!
+        web applications with authentication using the MERN stack.
       </p>
+      {currentUser && currentUser.role === "admin" ? (
+        <Link to={"/dashboard"}>
+          <button className="bg-blue-500  text-white p-3 rounded-lg">
+            Go to Dashboard
+          </button>
+        </Link>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {signInStart, signInSuccess, signInFailure} from '../redux/users/userSlice'
 import { useDispatch,useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
+import { current } from "@reduxjs/toolkit";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -33,7 +34,12 @@ export default function SignUp() {
         return
       }
       dispatch(signInSuccess(data));
-      navigate("/")
+      if(data.role ==='admin'){
+        navigate('/dashboard')
+      }
+      else{
+        navigate('/')
+      }
     } catch (error) {
       dispatch(signInFailure(error))
     }

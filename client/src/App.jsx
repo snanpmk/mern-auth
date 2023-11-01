@@ -15,12 +15,12 @@ import ForNFor from "./pages/ForNFor";
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser, "////");
-
+  
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/"  element= {<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -33,7 +33,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        {currentUser && currentUser.username === "ChandlerBing" ? (
+        {currentUser && currentUser.role === "admin" ? (
           <>
             <Route path="/admin" element={<AdminLogin />} />
             <Route path="/dashboard" element={<Dashboard />} />

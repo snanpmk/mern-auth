@@ -105,33 +105,35 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((item, index) => (
-              <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                <td className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right">
-                  <img
-                    src={item.profilePicture}
-                    alt=""
-                    className="w-9 h-9 rounded-full object-cover mr-2"
-                  />
-                  {item.username}
-                </td>
-                <td className="px-6 py-4 text-center">{item.email}</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="font-medium bg-blue-300 py-3 px-3  rounded-lg text-black hover:bg-opacity-80 mr-2"
-                  >
-                    <RiEdit2Fill />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item)}
-                    className="font-medium bg-red-300 py-3 px-3  rounded-lg text-black hover:bg-opacity-80"
-                  >
-                    <RiDeleteBin2Fill />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {filteredData.map((item, index) =>
+              item.role !== "admin" ? (
+                <tr key={index} className="bg-white border-b hover:bg-gray-50">
+                  <td className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right">
+                    <img
+                      src={item.profilePicture}
+                      alt=""
+                      className="w-9 h-9 rounded-full object-cover mr-2"
+                    />
+                    {item.username}
+                  </td>
+                  <td className="px-6 py-4 text-center">{item.email}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="font-medium bg-blue-300 py-3 px-3 rounded-lg text-black hover:bg-opacity-80 mr-2"
+                    >
+                      <RiEdit2Fill />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="font-medium bg-red-300 py-3 px-3 rounded-lg text-black hover.bg-opacity-80"
+                    >
+                      <RiDeleteBin2Fill />
+                    </button>
+                  </td>
+                </tr>
+              ) : null
+            )}
           </tbody>
         </table>
       </div>
