@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { RiEdit2Fill, RiDeleteBin2Fill } from 'react-icons/ri'; // Import the icons from react-icons
+import { RiEdit2Fill, RiDeleteBin2Fill } from "react-icons/ri"; // Import the icons from react-icons
+import EditModal from "../../components/admin/EditModal";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../../redux/admin/adminSlice";
 
 function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [deletedUser, setDeletedUser] = useState(null);
+  const [editedUserData, setEditedUserData] = useState(null);
   const [data, setData] = useState([]);
-  const [deletedUser, setDeletedUser] = useState(null); 
-  console.log(deletedUser);// Initialize deletedUser as null
+  const { modalIsOpen } = useSelector((state) => state.admin);
+
+  const dispatch = useDispatch();
+  console.log(deletedUser); // Initialize deletedUser as null
 
   const fetchUsers = async () => {
     try {
@@ -27,8 +34,11 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
+    fetchUsers();
+  }, [modalIsOpen]);
+
+  useEffect(() => {
     if (deletedUser) {
-      // Re-render the component when the deletedUser state changes
       setData(data.filter((user) => user._id !== deletedUser._id));
     }
   }, [deletedUser]);
@@ -60,7 +70,10 @@ function Dashboard() {
 
   const handleEdit = async (item) => {
     const id = item._id;
-    console.log(id+"🛒🐐🛒");
+    // console.log(id + "🛒🐐🛒");
+    setEditedUserData(item);
+
+    dispatch(openModal());
   };
 
   return (
@@ -108,13 +121,13 @@ function Dashboard() {
                     onClick={() => handleEdit(item)}
                     className="font-medium bg-blue-300 py-3 px-3  rounded-lg text-black hover:bg-opacity-80 mr-2"
                   >
-                    <RiEdit2Fill /> 
+                    <RiEdit2Fill />
                   </button>
                   <button
                     onClick={() => handleDelete(item)}
                     className="font-medium bg-red-300 py-3 px-3  rounded-lg text-black hover:bg-opacity-80"
                   >
-                    <RiDeleteBin2Fill /> 
+                    <RiDeleteBin2Fill />
                   </button>
                 </td>
               </tr>
@@ -122,6 +135,7 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
+      <EditModal data={editedUserData} />
     </div>
   );
 }
