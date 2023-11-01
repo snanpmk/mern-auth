@@ -7,13 +7,17 @@ export default function Header() {
   return (
     <div className="bg-slate-200">
       <div className="flex justify-between max-w-6xl mx-auto items-center p-3">
-        <h1 className="font-bold">Auth App</h1>
+        <Link to={"/"}>
+          <h1 className="font-bold  uppercase text-gray-700 text-lg">
+            A u t h e n T i c a
+          </h1>
+        </Link>
         <ul className="flex gap-6">
           <Link to="/">
-            <li>Home</li>
+            <li className="">Home</li>
           </Link>
           <Link to="/about">
-            <li>About</li>
+            <li className="">About</li>
           </Link>
           {currentUser ? (
             <Link to="/profile">
