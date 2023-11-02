@@ -14,7 +14,6 @@ import ForNFor from "./pages/ForNFor";
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser, "////");
   
   return (
     <BrowserRouter>

@@ -15,7 +15,7 @@ export default function Home() {
       <img
         className="w-2/4 mx-auto"
         src="https://cdni.iconscout.com/illustration/premium/thumb/authentication-code-4487189-3726252.png?f=webp"
-        alt=""
+        alt="clipart"
       />
       <p className="mb-4 text-slate-700">
         Welcome to Authentica, our MERN (MongoDB, Express, React, Node.js)
