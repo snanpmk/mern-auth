@@ -8,7 +8,6 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { set } from "mongoose";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -29,7 +28,6 @@ export default function Profile() {
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
-  console.log(currentUser);
 
   useEffect(() => {
     if (image) {
@@ -97,7 +95,6 @@ export default function Profile() {
         },
       });
       const data = await res.json();
-      console.log(data);
       if (data.success == false) {
         dispatch(deleteUserFailure(data));
         return;

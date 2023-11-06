@@ -64,8 +64,7 @@ function Dashboard() {
       },
     });
     const data = await res.json();
-    setDeletedUser(item); // Update the deletedUser state
-    console.log(data);
+    setDeletedUser(item); 
   };
 
   const handleEdit = async (item) => {

@@ -3,10 +3,8 @@ import { closeModal } from "../../redux/admin/adminSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function EditModal({ data }) {
-  console.log(data?._id + "❤️❤️❤️❤️"); // Use optional chaining (?.)
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  console.log(formData);
   const { modalIsOpen } = useSelector((state) => state.admin);
   const modalClassName = `fixed inset-0 flex items-center justify-center z-50 ${
     modalIsOpen ? "flex" : "hidden"

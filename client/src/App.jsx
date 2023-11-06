@@ -8,7 +8,6 @@ import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
-import AdminLogin from "./pages/admin/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import ForNFor from "./pages/ForNFor";
 
@@ -34,7 +33,6 @@ export default function App() {
         />
         {currentUser && currentUser.role === "admin" ? (
           <>
-            <Route path="/admin" element={<AdminLogin />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </>
         ) : (
